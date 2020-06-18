@@ -129,6 +129,12 @@
   font-size: 15px;
   }
 
+.legend h4 {
+  margin: 5 0 5px;
+  color: white;
+  font-size: 13px;
+  }
+
 .legend p {
   margin: 5 0 5px;
   font-size: 11px;
@@ -168,10 +174,10 @@
   <h3>Destinations</h3>
   <div><span style="background-color: #E65100"></span>Selected destination type</div>
   <h3>Travel Times</h3>
-  <h3>(Census <i>Radios</i>)</h3>
-  <div><span style="background-color: #cbf3a5"></span><i>Radio</i> without asent.</div>
-  <div><span style="background-color: #f3dda5"></span><i>Radio</i> partially with asent.</div>
-  <div><span style="background-color: #f3a5a5"></span><i>Radio</i> primarily with asent.</div>
+  <h4>(per Census <i>Radio</i>)</h4>
+  <div><span style="background-color: #decbf0"></span><i>Radio</i> without asent.</div>
+  <div><span style="background-color: #9d64d3"></span><i>Radio</i> partially with asent.</div>
+  <div><span style="background-color: #5b278b"></span><i>Radio</i> primarily with asent.</div>
   </ul>
 </div>
 
@@ -547,7 +553,7 @@ map.on('load', function () {
                       'MAJ', '#2a1240',
                       /* other */ '#ccc'
                 ],
-                'circle-opacity': 0.5
+                'circle-opacity': 0.75
              }
        });
 
@@ -760,9 +766,15 @@ map.on('load', function () {
              "visibility": "none"
          },
          "filter": ["==", "nivel", 'Nivel Inicial'],
-         "minzoom": 11,
          "paint": {
-           "circle-radius": 2.5,
+           "circle-radius": {
+                              'base': 2,
+                              'stops': [
+                              [9, 1.5], //zoom level 3
+                              [11, 2], // zoom level 12
+                              [13, 2.5] //zoom level 22
+                              ]
+                            },
            "circle-color": "#E65100"
          }
    });
@@ -780,9 +792,15 @@ map.on('load', function () {
               "visibility": "none"
           },
           "filter": ["==", "nivel", 'Nivel Primario'],
-          "minzoom": 11,
           "paint": {
-            "circle-radius": 2.5,
+            "circle-radius": {
+                               'base': 2,
+                               'stops': [
+                               [9, 1.5], //zoom level 3
+                               [11, 2], // zoom level 12
+                               [13, 2.5] //zoom level 22
+                               ]
+                             },
             "circle-color": "#E65100"
           }
     });
@@ -801,13 +819,18 @@ map.on('load', function () {
                   "visibility": "none"
               },
               "filter": ["==", "nivel", 'Nivel Secundario'],
-              "minzoom": 11,
               "paint": {
-                "circle-radius": 2.5,
+                "circle-radius": {
+                                   'base': 2,
+                                   'stops': [
+                                   [9, 1.5], //zoom level 3
+                                   [11, 2], // zoom level 12
+                                   [13, 2.5] //zoom level 22
+                                   ]
+                                 },
                 "circle-color": "#E65100"
               }
         });
-
 
  // Adds the health diagnostic centers to the map
   map.addLayer({
@@ -821,10 +844,16 @@ map.on('load', function () {
         "layout": {
           "visibility": "none"
         },
-        //"filter": ["==", ["get", "provincia"], "Buenos Aires"],
-        "minzoom": 11,
+        //"minzoom": 11,
         "paint": {
-          "circle-radius": 3,
+          "circle-radius": {
+                             'base': 2,
+                             'stops': [
+                             [9, 1.5], //zoom level 3
+                             [11, 2.5], // zoom level 12
+                             [13, 3.5] //zoom level 22
+                             ]
+                           },
           "circle-color": "#E65100"
         }
   });
@@ -842,7 +871,7 @@ map.on('load', function () {
            "visibility": "none"
          },
          //"filter": ["==", ["get", "provincia"], "Buenos Aires"],
-         "minzoom": 11,
+         //"minzoom": 11,
          "paint": {
            "circle-radius": 3,
            "circle-color": "#E65100"
@@ -863,7 +892,7 @@ map.on('load', function () {
           },
           //"minzoom": 10,
           "paint": {
-            "circle-radius": 4,
+            "circle-radius": 3,
             "circle-color": "#E65100"
           }
     });
