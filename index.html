@@ -102,12 +102,17 @@
       border-radius: 2px;
   }
 
+.mapboxgl-popup p {
+        font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-size: 14px;
+  }
+
 /* This controls the size and location of the legend */
 .legend {
   background-color: #232323;
   border-radius: 2px;
   font: 12px/18px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   color: #E8E8E8;
   /*box-shadow: 0 1px 2px rgba(0, 0, 0, 1);*/
   padding: 10px;
@@ -121,7 +126,7 @@
 .legend h3 {
   margin: 5 0 5px;
   color: white;
-  font-size: 14px;
+  font-size: 15px;
   }
 
 .legend p {
@@ -142,8 +147,8 @@
 .legend div span {
   border-radius: 50%;
   display: inline-block;
-  height: 10px;
-  width: 10px;
+  height: 12px;
+  width: 12px;
   margin-right: 10px;
   /*font-size: 12px;*/
   }
@@ -158,15 +163,15 @@
 
 <div id="asent-legend" class="legend">
   <h3>Origins</h3>
-  <div><span-rec style="background-color: #00a1ff"></span-rec>Asentamientos</div>
+  <div><span-rec style="background-color: #199a75"></span-rec>Asentamientos</div>
   <div><span-rec style="background-color: gray"></span-rec>Studied department or <i>radio</i></div>
   <h3>Destinations</h3>
-  <div><span style="background-color: #E65100"></span>Active destination</div>
+  <div><span style="background-color: #E65100"></span>Selected destination type</div>
   <h3>Travel Times</h3>
   <h3>(Census <i>Radios</i>)</h3>
   <div><span style="background-color: #cbf3a5"></span><i>Radio</i> without asent.</div>
-  <div><span style="background-color: #f3dda5"></span><i>Radio</i> partially asent.</div>
-  <div><span style="background-color: #f3a5a5"></span><i>Radio</i> mostly asent.</div>
+  <div><span style="background-color: #f3dda5"></span><i>Radio</i> partially with asent.</div>
+  <div><span style="background-color: #f3a5a5"></span><i>Radio</i> primarily with asent.</div>
   </ul>
 </div>
 
@@ -284,7 +289,7 @@ map.on('load', function () {
              //"layout":
              "minzoom": 10,
              "paint": {
-               "fill-opacity": 0.1,
+               "fill-opacity": 0.125,
                //"fill-color": '#',
                //"fill-outline-color": "black"
              }
@@ -350,7 +355,7 @@ map.on('load', function () {
                 'match',
                 ['get', 'COVERAGE_TYPE'],
                 'NONE', '#decbf0',
-                'MIN', '#8e4ccd',
+                'MIN', '#9d64d3',
                 'MAJ', '#5b278b',
                 /* other */ '#ccc'
             ],
@@ -366,24 +371,27 @@ map.on('load', function () {
          }
    });
 
-   // When a click event occurs on a feature in the states layer, open a popup at the
-   // location of the click, with description HTML from its properties.
-   map.on('click', 'TT: BsAs CBD', function(e) {
-     new mapboxgl.Popup()
-       .setLngLat(e.lngLat)
-       .setHTML(e.features[0].properties.trvtime_cbd_bsas)
-       .addTo(map);
-   });
+   map.on('mouseenter', 'TT: BsAs CBD', function(e) {
 
-   // Change the cursor to a pointer when the mouse is over the states layer.
-   map.on('mouseenter', 'TT: BsAs CBD', function() {
-   map.getCanvas().style.cursor = 'pointer';
-   });
+          // Change the cursor style as a UI indicator.
+          map.getCanvas().style.cursor = 'pointer';
 
-   // Change it back to a pointer when it leaves.
-   map.on('mouseleave', 'TT: BsAs CBD', function() {
-   map.getCanvas().style.cursor = '';
-   });
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var ttime_cbd_bsas = e.features[0].properties.trvtime_cbd_bsas;
+          var ttime_cbd_bsas = Math.round(ttime_cbd_bsas)
+
+          // Populate the popup and set its coordinates
+          // based on the feature found.
+          popup
+            .setLngLat(coordinates)
+            .setHTML(ttime_cbd_bsas + ' minutes')
+            .addTo(map);
+          });
+
+      map.on('mouseleave', 'TT: BsAs CBD', function() {
+          map.getCanvas().style.cursor = '';
+          popup.remove();
+          });
 
    // Adds the Departmental CBD travel times to the map
   map.addLayer({
@@ -408,7 +416,7 @@ map.on('load', function () {
                   'match',
                   ['get', 'COVERAGE_TYPE'],
                   'NONE', '#decbf0',
-                  'MIN', '#8e4ccd',
+                  'MIN', '#9d64d3',
                   'MAJ', '#5b278b',
                   /* other */ '#ccc'
               ],
@@ -443,23 +451,23 @@ map.on('load', function () {
                      11, ['/', ['number', ['get', 'trvtime_cbd_ngh_min']], 15],
                      13, ['/', ['number', ['get', 'trvtime_cbd_ngh_min']], 5],
               ],
-             "circle-color": [
-                  'match',
-                       ['get', 'COVERAGE_TYPE'],
-                       'NONE', '#decbf0',
-                       'MIN', '#8e4ccd',
-                       'MAJ', '#5b278b',
-                       /* other */ '#ccc'
-             ],
-             "circle-stroke-width": 0.8,
-             "circle-stroke-color": [
-                    'match',
-                    ['get', 'COVERAGE_TYPE'],
-                    'NONE', '#8e4ccd',
-                    'MIN', '#491f6f',
-                    'MAJ', '#2a1240',
-                    /* other */ '#ccc'
-             ]
+              "circle-color": [
+                   'match',
+                   ['get', 'COVERAGE_TYPE'],
+                   'NONE', '#decbf0',
+                   'MIN', '#9d64d3',
+                   'MAJ', '#5b278b',
+                   /* other */ '#ccc'
+               ],
+              "circle-stroke-width": 0.8,
+              "circle-stroke-color": [
+                'match',
+                ['get', 'COVERAGE_TYPE'],
+                'NONE', '#8e4ccd',
+                'MIN', '#491f6f',
+                'MAJ', '#2a1240',
+                /* other */ '#ccc'
+               ]
            }
      });
 
@@ -484,22 +492,22 @@ map.on('load', function () {
                       13, ['/', ['number', ['get', 'trvtime_rail_min']], 5],
               ],
               "circle-color": [
-                    'match',
-                        ['get', 'COVERAGE_TYPE'],
-                        'NONE', '#decbf0',
-                        'MIN', '#8e4ccd',
-                        'MAJ', '#5b278b',
-                        /* other */ '#ccc'
-              ],
+                   'match',
+                   ['get', 'COVERAGE_TYPE'],
+                   'NONE', '#decbf0',
+                   'MIN', '#9d64d3',
+                   'MAJ', '#5b278b',
+                   /* other */ '#ccc'
+               ],
               "circle-stroke-width": 0.8,
               "circle-stroke-color": [
-                     'match',
-                        ['get', 'COVERAGE_TYPE'],
-                        'NONE', '#8e4ccd',
-                        'MIN', '#491f6f',
-                        'MAJ', '#2a1240',
-                        /* other */ '#ccc'
-              ]
+                'match',
+                ['get', 'COVERAGE_TYPE'],
+                'NONE', '#8e4ccd',
+                'MIN', '#491f6f',
+                'MAJ', '#2a1240',
+                /* other */ '#ccc'
+               ]
             }
       });
 
@@ -516,25 +524,30 @@ map.on('load', function () {
                  "visibility": "none"
              },
              "paint": {
-               "circle-radius":
-                    ['/', ['get', 'trvtime_dgntrt_min'], 15],
-               "circle-color": [
-                    'match',
-                    ['get', 'COVERAGE_TYPE'],
-                    'NONE', '#cbf3a5',
-                    'MIN', '#f3dda5',
-                    'MAJ', '#f3a5a5',
-                    /* other */ '#ccc'
-               ],
-               "circle-stroke-width": 1,
-               "circle-stroke-color": [
-                 'match',
-                 ['get', 'COVERAGE_TYPE'],
-                 'NONE', '#217109',
-                 'MIN', '#b3900f',
-                 'MAJ', '#8e120b',
-                 /* other */ '#ccc'
-                ]
+               "circle-radius": [
+                       'interpolate', ['linear'], ['zoom'],
+                       9, ['/', ['number', ['get', 'trvtime_dgntrt_min']], 5],
+                       11, ['/', ['number', ['get', 'trvtime_dgntrt_min']], 3.5],
+                       13, ['/', ['number', ['get', 'trvtime_dgntrt_min']], 2],
+                ],
+                "circle-color": [
+                         'match',
+                         ['get', 'COVERAGE_TYPE'],
+                         'NONE', '#decbf0',
+                         'MIN', '#9d64d3',
+                         'MAJ', '#5b278b',
+                         /* other */ '#ccc'
+                ],
+                "circle-stroke-width": 0.8,
+                "circle-stroke-color": [
+                      'match',
+                      ['get', 'COVERAGE_TYPE'],
+                      'NONE', '#8e4ccd',
+                      'MIN', '#491f6f',
+                      'MAJ', '#2a1240',
+                      /* other */ '#ccc'
+                ],
+                'circle-opacity': 0.5
              }
        });
 
@@ -557,23 +570,23 @@ map.on('load', function () {
                         11, ['/', ['number', ['get', 'trvtime_hspt_min']], 10],
                         13, ['/', ['number', ['get', 'trvtime_hspt_min']], 5],
                       ],
-                "circle-color": [
-                     'match',
-                     ['get', 'COVERAGE_TYPE'],
-                     'NONE', '#cbf3a5',
-                     'MIN', '#f3dda5',
-                     'MAJ', '#f3a5a5',
-                     /* other */ '#ccc'
-                ],
-                "circle-stroke-width": 1,
-                "circle-stroke-color": [
-                  'match',
-                  ['get', 'COVERAGE_TYPE'],
-                  'NONE', '#217109',
-                  'MIN', '#b3900f',
-                  'MAJ', '#8e120b',
-                  /* other */ '#ccc'
-                 ]
+                  "circle-color": [
+                           'match',
+                           ['get', 'COVERAGE_TYPE'],
+                           'NONE', '#decbf0',
+                           'MIN', '#9d64d3',
+                           'MAJ', '#5b278b',
+                           /* other */ '#ccc'
+                       ],
+                  "circle-stroke-width": 0.8,
+                  "circle-stroke-color": [
+                        'match',
+                        ['get', 'COVERAGE_TYPE'],
+                        'NONE', '#8e4ccd',
+                        'MIN', '#491f6f',
+                        'MAJ', '#2a1240',
+                        /* other */ '#ccc'
+                       ]
               }
         });
 
@@ -590,24 +603,28 @@ map.on('load', function () {
                    "visibility": "none"
                },
                "paint": {
-                 "circle-radius":
-                      ['/', ['get', 'trvtime_upa_min'], 15],
-                 "circle-color": [
-                      'match',
-                      ['get', 'COVERAGE_TYPE'],
-                      'NONE', '#cbf3a5',
-                      'MIN', '#f3dda5',
-                      'MAJ', '#f3a5a5',
-                      /* other */ '#ccc'
-                 ],
-                 "circle-stroke-width": 1,
-                 "circle-stroke-color": [
-                   'match',
-                   ['get', 'COVERAGE_TYPE'],
-                   'NONE', '#217109',
-                   'MIN', '#b3900f',
-                   'MAJ', '#8e120b',
-                   /* other */ '#ccc'
+                 "circle-radius": [
+                         'interpolate', ['linear'], ['zoom'],
+                         9, ['/', ['number', ['get', 'trvtime_upa_min']], 15],
+                         11, ['/', ['number', ['get', 'trvtime_upa_min']], 10],
+                         13, ['/', ['number', ['get', 'trvtime_upa_min']], 5],
+                  ],
+                  "circle-color": [
+                           'match',
+                           ['get', 'COVERAGE_TYPE'],
+                           'NONE', '#decbf0',
+                           'MIN', '#9d64d3',
+                           'MAJ', '#5b278b',
+                           /* other */ '#ccc'
+                  ],
+                  "circle-stroke-width": 0.8,
+                  "circle-stroke-color": [
+                        'match',
+                        ['get', 'COVERAGE_TYPE'],
+                        'NONE', '#8e4ccd',
+                        'MIN', '#491f6f',
+                        'MAJ', '#2a1240',
+                        /* other */ '#ccc'
                   ]
                }
          });
@@ -632,21 +649,21 @@ map.on('load', function () {
                           13, ['/', ['number', ['get', 'trvtime_edknd_min']], 1],
                   ],
                   "circle-color": [
-                        'match',
-                            ['get', 'COVERAGE_TYPE'],
-                            'NONE', '#decbf0',
-                            'MIN', '#8e4ccd',
-                            'MAJ', '#5b278b',
-                            /* other */ '#ccc'
+                         'match',
+                         ['get', 'COVERAGE_TYPE'],
+                         'NONE', '#decbf0',
+                         'MIN', '#9d64d3',
+                         'MAJ', '#5b278b',
+                         /* other */ '#ccc'
                   ],
                   "circle-stroke-width": 0.8,
                   "circle-stroke-color": [
-                         'match',
-                            ['get', 'COVERAGE_TYPE'],
-                            'NONE', '#8e4ccd',
-                            'MIN', '#491f6f',
-                            'MAJ', '#2a1240',
-                            /* other */ '#ccc'
+                        'match',
+                        ['get', 'COVERAGE_TYPE'],
+                        'NONE', '#8e4ccd',
+                        'MIN', '#491f6f',
+                        'MAJ', '#2a1240',
+                        /* other */ '#ccc'
                   ]
                 }
           });
@@ -664,24 +681,28 @@ map.on('load', function () {
                      "visibility": "none"
                  },
                  "paint": {
-                   "circle-radius":
-                        ['/', ['get', 'trvtime_edprm_min'], 3],
-                   "circle-color": [
-                        'match',
-                        ['get', 'COVERAGE_TYPE'],
-                        'NONE', '#cbf3a5',
-                        'MIN', '#f3dda5',
-                        'MAJ', '#f3a5a5',
-                        /* other */ '#ccc'
+                   "circle-radius": [
+                           'interpolate', ['linear'], ['zoom'],
+                           9, ['/', ['number', ['get', 'trvtime_edprm_min']], 5],
+                           11, ['/', ['number', ['get', 'trvtime_edprm_min']], 2.5],
+                           13, ['/', ['number', ['get', 'trvtime_edprm_min']], 1],
                    ],
-                   "circle-stroke-width": 1,
+                   "circle-color": [
+                          'match',
+                          ['get', 'COVERAGE_TYPE'],
+                          'NONE', '#decbf0',
+                          'MIN', '#9d64d3',
+                          'MAJ', '#5b278b',
+                          /* other */ '#ccc'
+                    ],
+                   "circle-stroke-width": 0.8,
                    "circle-stroke-color": [
-                     'match',
-                     ['get', 'COVERAGE_TYPE'],
-                     'NONE', '#217109',
-                     'MIN', '#b3900f',
-                     'MAJ', '#8e120b',
-                     /* other */ '#ccc'
+                         'match',
+                         ['get', 'COVERAGE_TYPE'],
+                         'NONE', '#8e4ccd',
+                         'MIN', '#491f6f',
+                         'MAJ', '#2a1240',
+                         /* other */ '#ccc'
                     ]
                  }
            });
@@ -699,23 +720,27 @@ map.on('load', function () {
                       "visibility": "none"
                   },
                   "paint": {
-                    "circle-radius":
-                         ['/', ['get', 'trvtime_edsec_min'], 3],
+                    "circle-radius": [
+                            'interpolate', ['linear'], ['zoom'],
+                            9, ['/', ['number', ['get', 'trvtime_edsec_min']], 5],
+                            11, ['/', ['number', ['get', 'trvtime_edsec_min']], 2.5],
+                            13, ['/', ['number', ['get', 'trvtime_edsec_min']], 1],
+                    ],
                     "circle-color": [
                          'match',
                          ['get', 'COVERAGE_TYPE'],
-                         'NONE', '#cbf3a5',
-                         'MIN', '#f3dda5',
-                         'MAJ', '#f3a5a5',
+                         'NONE', '#decbf0',
+                         'MIN', '#9d64d3',
+                         'MAJ', '#5b278b',
                          /* other */ '#ccc'
-                    ],
-                    "circle-stroke-width": 1,
+                     ],
+                    "circle-stroke-width": 0.8,
                     "circle-stroke-color": [
                       'match',
                       ['get', 'COVERAGE_TYPE'],
-                      'NONE', '#217109',
-                      'MIN', '#b3900f',
-                      'MAJ', '#8e120b',
+                      'NONE', '#8e4ccd',
+                      'MIN', '#491f6f',
+                      'MAJ', '#2a1240',
                       /* other */ '#ccc'
                      ]
                   }
@@ -735,9 +760,9 @@ map.on('load', function () {
              "visibility": "none"
          },
          "filter": ["==", "nivel", 'Nivel Inicial'],
-         "minzoom": 12,
+         "minzoom": 11,
          "paint": {
-           "circle-radius": 4,
+           "circle-radius": 2.5,
            "circle-color": "#E65100"
          }
    });
@@ -755,9 +780,9 @@ map.on('load', function () {
               "visibility": "none"
           },
           "filter": ["==", "nivel", 'Nivel Primario'],
-          "minzoom": 12,
+          "minzoom": 11,
           "paint": {
-            "circle-radius": 4,
+            "circle-radius": 2.5,
             "circle-color": "#E65100"
           }
     });
@@ -776,9 +801,9 @@ map.on('load', function () {
                   "visibility": "none"
               },
               "filter": ["==", "nivel", 'Nivel Secundario'],
-              "minzoom": 12,
+              //"minzoom": 11.5,
               "paint": {
-                "circle-radius": 4,
+                "circle-radius": 2.5,
                 "circle-color": "#E65100"
               }
         });
@@ -796,10 +821,10 @@ map.on('load', function () {
         "layout": {
           "visibility": "none"
         },
-        "filter": ["==", ["get", "provincia"], "Buenos Aires"],
-        "minzoom": 12,
+        //"filter": ["==", ["get", "provincia"], "Buenos Aires"],
+        //"minzoom": 12,
         "paint": {
-          "circle-radius": 4,
+          "circle-radius": 3,
           "circle-color": "#E65100"
         }
   });
@@ -816,10 +841,10 @@ map.on('load', function () {
          "layout": {
            "visibility": "none"
          },
-         "filter": ["==", ["get", "provincia"], "Buenos Aires"],
-         "minzoom": 12,
+         //"filter": ["==", ["get", "provincia"], "Buenos Aires"],
+         "minzoom": 11,
          "paint": {
-           "circle-radius": 4,
+           "circle-radius": 3,
            "circle-color": "#E65100"
          }
    });
@@ -836,7 +861,7 @@ map.on('load', function () {
           "layout": {
             "visibility": "none"
           },
-          "minzoom": 12,
+          //"minzoom": 10,
           "paint": {
             "circle-radius": 4,
             "circle-color": "#E65100"
@@ -857,7 +882,7 @@ map.on('load', function () {
           "visibility": "none"
         },
         "paint": {
-          "circle-radius": 4,
+          "circle-radius": 3,
           "circle-color": "#E65100"
         }
   });
