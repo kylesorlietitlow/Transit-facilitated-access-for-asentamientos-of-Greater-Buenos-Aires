@@ -13,7 +13,7 @@
 <body>
 <style>
 
-/* This controls styling for the map elements */
+/* This controls styling for the map elements ------------------------------------------------------------- */
 .map {
   background-color: #8BBAD8;
   color: black;
@@ -36,7 +36,7 @@
   font-size: 11.5px;
 }
 
-/* This controls the menu for selecting layers on and off */
+/* This controls the menu for selecting layers on and off ------------------------------------------------- */
 .menu {
     background: #232323;
     position: absolute;
@@ -94,20 +94,60 @@
     background: #1C5989;
   }
 
-/* This adjusts the pop-ups */
+/* This adjusts the pop-ups --------------------------------------------------------------------------- */
 .mapboxgl-popup {
       max-width: 400px;
       font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
       font-size: 14px;
       border-radius: 2px;
+      padding-bottom: 50px;
   }
 
-.mapboxgl-popup p {
-        font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-        font-size: 14px;
-  }
+.mapboxgl-popup-content {
+        font:400 15px/22px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        padding:0;
+        width:180px;
+      }
 
-/* This controls the size and location of the legend */
+  .mapboxgl-popup-content-wrapper {
+        padding:1%;
+      }
+
+  .mapboxgl-popup-content h3 {
+        background:#91c949;
+        color:#fff;
+        margin:0;
+        display:block;
+        padding:10px;
+        border-radius:3px 3px 0 0;
+        font-weight:700;
+        margin-top:-15px;
+      }
+
+  .mapboxgl-popup-content h4 {
+        margin:0;
+        display:block;
+        padding: 10px 10px 10px 10px;
+        font-weight:400;
+      }
+
+  .mapboxgl-popup-content div {
+        padding:10px;
+      }
+
+  .mapboxgl-container .leaflet-marker-icon {
+        cursor:pointer;
+      }
+
+  .mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+        margin-top: 15px;
+      }
+
+ .mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
+        border-bottom-color: #91c949;
+      }
+
+/* This controls the size and location of the legend -------------------------------------------------------- */
 .legend {
   background-color: #232323;
   border-radius: 2px;
@@ -172,7 +212,7 @@
   <div><span-rec style="background-color: #199a75"></span-rec>Asentamientos</div>
   <div><span-rec style="background-color: gray"></span-rec>Studied department or <i>radio</i></div>
   <h3>Destinations</h3>
-  <div><span style="background-color: #E65100"></span>Selected destination type</div>
+  <div><span style="background-color: #E65100"></span>Locations of selected type</div>
   <h3>Travel Times</h3>
   <h4>(per Census <i>Radio</i>)</h4>
   <div><span style="background-color: #decbf0"></span><i>Radio</i> without asent.</div>
@@ -323,7 +363,7 @@ map.on('load', function () {
      map.on('click', 'Asentamientos', function(e) {
        new mapboxgl.Popup()
          .setLngLat(e.lngLat)
-         .setHTML('<b>Asentamiento: </b><br>' + e.features[0].properties.nombre_barrio)
+         .setHTML('<b>Asentamiento: </b>' + e.features[0].properties.nombre_barrio)
          .addTo(map);
      });
 
@@ -337,67 +377,339 @@ map.on('load', function () {
      map.getCanvas().style.cursor = '';
      });
 
+     // DESTINATIONS --------------------------------------------------------------------------------------
+     // Adds kindergartens the map
+      map.addLayer({
+            "id": "Public Kindergartens",
+            "type": "circle",
+            "source": {
+              type: 'vector',
+              url: 'mapbox://kjtitlowsorlie.8qn1w9yg',
+            },
+            "source-layer": "destinations_schools-1vhhh5",
+            "layout": {
+                "visibility": "none"
+            },
+            "filter": ["==", "nivel", 'Nivel Inicial'],
+            "paint": {
+              "circle-radius": {
+                                 'base': 2,
+                                 'stops': [
+                                 [9, 1.25], //zoom level 3
+                                 [11, 2], // zoom level 12
+                                 [13, 2.5] //zoom level 22
+                                 ]
+                               },
+              "circle-color": "#E65100"
+            }
+      });
+
+      // Adds primary schools to the map
+       map.addLayer({
+             "id": "Public Primary Schools",
+             "type": "circle",
+             "source": {
+               type: 'vector',
+               url: 'mapbox://kjtitlowsorlie.8qn1w9yg',
+             },
+             "source-layer": "destinations_schools-1vhhh5",
+             "layout": {
+                 "visibility": "none"
+             },
+             "filter": ["==", "nivel", 'Nivel Primario'],
+             "paint": {
+               "circle-radius": {
+                                  'base': 2,
+                                  'stops': [
+                                  [9, 1.25], //zoom level 3
+                                  [11, 2], // zoom level 12
+                                  [13, 2.5] //zoom level 22
+                                  ]
+                                },
+               "circle-color": "#E65100"
+             }
+       });
+
+
+          // Adds primary schools to the map
+        map.addLayer({
+                 "id": "Public Secondary Schools",
+                 "type": "circle",
+                 "source": {
+                   type: 'vector',
+                   url: 'mapbox://kjtitlowsorlie.8qn1w9yg',
+                 },
+                 "source-layer": "destinations_schools-1vhhh5",
+                 "layout": {
+                     "visibility": "none"
+                 },
+                 "filter": ["==", "nivel", 'Nivel Secundario'],
+                 "paint": {
+                   "circle-radius": {
+                                      'base': 2,
+                                      'stops': [
+                                      [9, 1.25], //zoom level 3
+                                      [11, 2], // zoom level 12
+                                      [13, 2.5] //zoom level 22
+                                      ]
+                                    },
+                   "circle-color": "#E65100"
+                 }
+           });
+
+    // Adds the health diagnostic centers to the map
+     map.addLayer({
+           "id": "Diagnostic Health Centers",
+           "type": "circle",
+           "source": {
+             type: 'vector',
+             url: 'mapbox://kjtitlowsorlie.bk65u8du',
+           },
+           "source-layer": "destinations_health_diagnosti-1f5bc4",
+           "layout": {
+             "visibility": "none"
+           },
+           //"minzoom": 11,
+           "paint": {
+             "circle-radius": {
+                                'base': 2,
+                                'stops': [
+                                [9, 1.5], //zoom level 3
+                                [11, 2.5], // zoom level 12
+                                [13, 3.5] //zoom level 22
+                                ]
+                              },
+             "circle-color": "#E65100"
+           }
+     });
+
+     // Adds the hospitals
+      map.addLayer({
+            "id": "Public Hospitals",
+            "type": "circle",
+            "source": {
+              type: 'vector',
+              url: 'mapbox://kjtitlowsorlie.b91ojl8b',
+            },
+            "source-layer": "destinations_health_hospitals-ar86ee",
+            "layout": {
+              "visibility": "none"
+            },
+            //"filter": ["==", ["get", "provincia"], "Buenos Aires"],
+            //"minzoom": 11,
+            "paint": {
+              "circle-radius": 3,
+              "circle-color": "#E65100"
+            }
+      });
+
+      // Adds the urgent care centers
+       map.addLayer({
+             "id": "Urgent Care Centers",
+             "type": "circle",
+             "source": {
+               type: 'vector',
+               url: 'mapbox://kjtitlowsorlie.ai2yaxzu',
+             },
+             "source-layer": "destinations_health_pronta-9frmpu",
+             "layout": {
+               "visibility": "none"
+             },
+             //"minzoom": 10,
+             "paint": {
+               "circle-radius": 3,
+               "circle-color": "#E65100"
+             }
+       });
+
+
+    //Adds the major passenger rail stations to the map
+     map.addLayer({
+           "id": "Railway Stations",
+           "type": "circle",
+           "source": {
+             type: 'vector',
+             url: 'mapbox://kjtitlowsorlie.ck2hr20v70bl22ons6yqz7v2i-2m3e1',
+           },
+           "source-layer": "transport_rail_stations",
+           "layout": {
+             "visibility": "none"
+           },
+           "paint": {
+             "circle-radius": 3,
+             "circle-color": "#E65100"
+           }
+     });
+
+
+     //Adds the CBD's of the administrative districts to the map
+     map.addLayer({
+           "id": "Proximate CBDs",
+           "type": "circle",
+           "source": {
+             type: 'vector',
+             url: 'mapbox://kjtitlowsorlie.dzh4aewp',
+           },
+           "source-layer": "destinations_cbd_n3_proximate-47a3a8",
+           "layout": {
+              "visibility": "none"
+           },
+           "paint": {
+             "circle-radius": 4,
+             "circle-color": "#E65100",
+             'circle-stroke-color': '#E65100',
+             'circle-stroke-width': 1,
+           }
+     });
+
+     //Adds the CBD's of Quilmes
+     map.addLayer({
+           "id": "Pilar CBD",
+           "type": "circle",
+           "source": {
+             type: 'vector',
+             url: 'mapbox://kjtitlowsorlie.agl0ofae',
+           },
+           "source-layer": "destinations_cbd_n3_pilar-d5nb3e",
+           "layout": {
+              "visibility": "none"
+           },
+           "paint": {
+             "circle-radius": 5,
+             "circle-color": "#E65100",
+             'circle-stroke-color': '#E65100',
+             'circle-stroke-width': 1,
+           }
+     });
+
+     //Adds the CBD's of La Matanza
+     map.addLayer({
+           "id": "La Matanza CBD",
+           "type": "circle",
+           "source": {
+             type: 'vector',
+             url: 'mapbox://kjtitlowsorlie.d1w0pjta',
+           },
+           "source-layer": "destinations_cbd_n3_lamatanza-6petqm",
+           "layout": {
+              "visibility": "none"
+           },
+           "paint": {
+             "circle-radius": 5,
+             "circle-color": "#E65100",
+             'circle-stroke-color': '#E65100',
+             'circle-stroke-width': 1,
+           }
+     });
+
+     //Adds the CBD's of Quilmes
+     map.addLayer({
+           "id": "Quilmes CBD",
+           "type": "circle",
+           "source": {
+             type: 'vector',
+             url: 'mapbox://kjtitlowsorlie.29oi0mt7',
+           },
+           "source-layer": "destinations_cbd_n3_quilmes-09rt2h",
+           "layout": {
+              "visibility": "none"
+           },
+           "paint": {
+             "circle-radius": 5,
+             "circle-color": "#E65100",
+             'circle-stroke-color': '#E65100',
+             'circle-stroke-width': 1,
+           }
+     });
+
+
+     //Adds the CBD's of Buenos Aires AMBA
+     map.addLayer({
+           "id": "Buenos Aires CBD",
+           "type": "circle",
+           "source": {
+             type: 'vector',
+             url: 'mapbox://kjtitlowsorlie.0sun1ebq',
+           },
+           "source-layer": "destinations_cbd_amba-43nl1e",
+           "layout": {
+              "visibility": "none"
+           },
+           "paint": {
+             "circle-radius": 6,
+             "circle-color": "#E65100",
+             'circle-stroke-color': '#E65100',
+             'circle-stroke-width': 1,
+           }
+     });
+
   // ORIGINS ---------------------------------------------------------
   // Adds the Buenos Aires CBD travel times to the map
-   map.addLayer({
-         "id": "TT: BsAs CBD",
-         "type": "circle",
-         "source": {
-           type: 'vector',
-           url: 'mapbox://kjtitlowsorlie.670ruj5d',
-         },
-         "source-layer": "origin_radio_n3_tt_all-9auufk",
-         "layout": {
-             "visibility": "none"
-         },
-         "paint": {
-           "circle-radius": [
-                   'interpolate', ['linear'], ['zoom'],
-                   9, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 30],
-                   11, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 20],
-                   13, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 10],
-            ],
-           "circle-color": [
-                'match',
-                ['get', 'COVERAGE_TYPE'],
-                'NONE', '#decbf0',
-                'MIN', '#9d64d3',
-                'MAJ', '#5b278b',
-                /* other */ '#ccc'
-            ],
-           "circle-stroke-width": 0.8,
-           "circle-stroke-color": [
-             'match',
-             ['get', 'COVERAGE_TYPE'],
-             'NONE', '#8e4ccd',
-             'MIN', '#491f6f',
-             'MAJ', '#2a1240',
-             /* other */ '#ccc'
-            ]
-         }
-   });
+  map.addLayer({
+             "id": "TT: BsAs CBD",
+             "type": "circle",
+             "source": {
+               type: 'vector',
+               url: 'mapbox://kjtitlowsorlie.670ruj5d',
+             },
+             "source-layer": "origin_radio_n3_tt_all-9auufk",
+             "layout": {
+                 "visibility": "none"
+             },
+             "paint": {
+               "circle-radius": [
+                       'interpolate', ['linear'], ['zoom'],
+                       9, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 30],
+                       11, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 20],
+                       13, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 10],
+                ],
+               "circle-color": [
+                    'match',
+                    ['get', 'COVERAGE_TYPE'],
+                    'NONE', '#decbf0',
+                    'MIN', '#9d64d3',
+                    'MAJ', '#5b278b',
+                    /* other */ '#ccc'
+                ],
+               "circle-stroke-width": 0.8,
+               "circle-stroke-color": [
+                 'match',
+                 ['get', 'COVERAGE_TYPE'],
+                 'NONE', '#8e4ccd',
+                 'MIN', '#491f6f',
+                 'MAJ', '#2a1240',
+                 /* other */ '#ccc'
+                ],
+                'circle-opacity': 0.75
+             }
+  });
 
-   map.on('mouseenter', 'TT: BsAs CBD', function(e) {
+  // Create a popup, but don't add it to the map yet.
+  var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+        });
 
-          // Change the cursor style as a UI indicator.
-          map.getCanvas().style.cursor = 'pointer';
+  map.on('mouseenter', 'TT: BsAs CBD', function(e) {
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
 
-          var coordinates = e.features[0].geometry.coordinates.slice();
-          var ttime_cbd_bsas = e.features[0].properties.trvtime_cbd_bsas;
-          var ttime_cbd_bsas = Math.round(ttime_cbd_bsas)
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var ttime_cbd_bsas = e.features[0].properties.trvtime_cbd_bsas;
+            var ttime_cbd_bsas = Math.round(ttime_cbd_bsas)
 
-          // Populate the popup and set its coordinates
-          // based on the feature found.
-          popup
+            // Populate the popup and set its coordinates
+            // based on the feature found.
+            popup
             .setLngLat(coordinates)
             .setHTML(ttime_cbd_bsas + ' minutes')
             .addTo(map);
-          });
+        });
 
-      map.on('mouseleave', 'TT: BsAs CBD', function() {
-          map.getCanvas().style.cursor = '';
-          popup.remove();
-          });
+  map.on('mouseleave', 'TT: BsAs CBD', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+        });
 
    // Adds the Departmental CBD travel times to the map
   map.addLayer({
@@ -434,7 +746,8 @@ map.on('load', function () {
                'MIN', '#491f6f',
                'MAJ', '#2a1240',
                /* other */ '#ccc'
-              ]
+              ],
+              'circle-opacity': 0.75
           }
     });
 
@@ -473,7 +786,8 @@ map.on('load', function () {
                 'MIN', '#491f6f',
                 'MAJ', '#2a1240',
                 /* other */ '#ccc'
-               ]
+               ],
+               'circle-opacity': 0.75
            }
      });
 
@@ -513,7 +827,8 @@ map.on('load', function () {
                 'MIN', '#491f6f',
                 'MAJ', '#2a1240',
                 /* other */ '#ccc'
-               ]
+               ],
+               'circle-opacity': 0.75
             }
       });
 
@@ -592,7 +907,8 @@ map.on('load', function () {
                         'MIN', '#491f6f',
                         'MAJ', '#2a1240',
                         /* other */ '#ccc'
-                       ]
+                 ],
+                 'circle-opacity': 0.75
               }
         });
 
@@ -631,7 +947,8 @@ map.on('load', function () {
                         'MIN', '#491f6f',
                         'MAJ', '#2a1240',
                         /* other */ '#ccc'
-                  ]
+                  ],
+                  'circle-opacity': 0.75
                }
          });
 
@@ -670,7 +987,8 @@ map.on('load', function () {
                         'MIN', '#491f6f',
                         'MAJ', '#2a1240',
                         /* other */ '#ccc'
-                  ]
+                  ],
+                  'circle-opacity': 0.75
                 }
           });
 
@@ -709,7 +1027,8 @@ map.on('load', function () {
                          'MIN', '#491f6f',
                          'MAJ', '#2a1240',
                          /* other */ '#ccc'
-                    ]
+                    ],
+                    'circle-opacity': 0.75
                  }
            });
 
@@ -748,275 +1067,10 @@ map.on('load', function () {
                       'MIN', '#491f6f',
                       'MAJ', '#2a1240',
                       /* other */ '#ccc'
-                     ]
+                     ],
+                     'circle-opacity': 0.75
                   }
             });
-
-  // DESTINATIONS --------------------------------------------------------------------------------------
-  // Adds kindergartens the map
-   map.addLayer({
-         "id": "Public Kindergartens",
-         "type": "circle",
-         "source": {
-           type: 'vector',
-           url: 'mapbox://kjtitlowsorlie.8qn1w9yg',
-         },
-         "source-layer": "destinations_schools-1vhhh5",
-         "layout": {
-             "visibility": "none"
-         },
-         "filter": ["==", "nivel", 'Nivel Inicial'],
-         "paint": {
-           "circle-radius": {
-                              'base': 2,
-                              'stops': [
-                              [9, 1.5], //zoom level 3
-                              [11, 2], // zoom level 12
-                              [13, 2.5] //zoom level 22
-                              ]
-                            },
-           "circle-color": "#E65100"
-         }
-   });
-
-   // Adds primary schools to the map
-    map.addLayer({
-          "id": "Public Primary Schools",
-          "type": "circle",
-          "source": {
-            type: 'vector',
-            url: 'mapbox://kjtitlowsorlie.8qn1w9yg',
-          },
-          "source-layer": "destinations_schools-1vhhh5",
-          "layout": {
-              "visibility": "none"
-          },
-          "filter": ["==", "nivel", 'Nivel Primario'],
-          "paint": {
-            "circle-radius": {
-                               'base': 2,
-                               'stops': [
-                               [9, 1.5], //zoom level 3
-                               [11, 2], // zoom level 12
-                               [13, 2.5] //zoom level 22
-                               ]
-                             },
-            "circle-color": "#E65100"
-          }
-    });
-
-
-       // Adds primary schools to the map
-     map.addLayer({
-              "id": "Public Secondary Schools",
-              "type": "circle",
-              "source": {
-                type: 'vector',
-                url: 'mapbox://kjtitlowsorlie.8qn1w9yg',
-              },
-              "source-layer": "destinations_schools-1vhhh5",
-              "layout": {
-                  "visibility": "none"
-              },
-              "filter": ["==", "nivel", 'Nivel Secundario'],
-              "paint": {
-                "circle-radius": {
-                                   'base': 2,
-                                   'stops': [
-                                   [9, 1.5], //zoom level 3
-                                   [11, 2], // zoom level 12
-                                   [13, 2.5] //zoom level 22
-                                   ]
-                                 },
-                "circle-color": "#E65100"
-              }
-        });
-
- // Adds the health diagnostic centers to the map
-  map.addLayer({
-        "id": "Diagnostic Health Centers",
-        "type": "circle",
-        "source": {
-          type: 'vector',
-          url: 'mapbox://kjtitlowsorlie.bk65u8du',
-        },
-        "source-layer": "destinations_health_diagnosti-1f5bc4",
-        "layout": {
-          "visibility": "none"
-        },
-        //"minzoom": 11,
-        "paint": {
-          "circle-radius": {
-                             'base': 2,
-                             'stops': [
-                             [9, 1.5], //zoom level 3
-                             [11, 2.5], // zoom level 12
-                             [13, 3.5] //zoom level 22
-                             ]
-                           },
-          "circle-color": "#E65100"
-        }
-  });
-
-  // Adds the hospitals
-   map.addLayer({
-         "id": "Public Hospitals",
-         "type": "circle",
-         "source": {
-           type: 'vector',
-           url: 'mapbox://kjtitlowsorlie.b91ojl8b',
-         },
-         "source-layer": "destinations_health_hospitals-ar86ee",
-         "layout": {
-           "visibility": "none"
-         },
-         //"filter": ["==", ["get", "provincia"], "Buenos Aires"],
-         //"minzoom": 11,
-         "paint": {
-           "circle-radius": 3,
-           "circle-color": "#E65100"
-         }
-   });
-
-   // Adds the urgent care centers
-    map.addLayer({
-          "id": "Urgent Care Centers",
-          "type": "circle",
-          "source": {
-            type: 'vector',
-            url: 'mapbox://kjtitlowsorlie.ai2yaxzu',
-          },
-          "source-layer": "destinations_health_pronta-9frmpu",
-          "layout": {
-            "visibility": "none"
-          },
-          //"minzoom": 10,
-          "paint": {
-            "circle-radius": 3,
-            "circle-color": "#E65100"
-          }
-    });
-
-
- //Adds the major passenger rail stations to the map
-  map.addLayer({
-        "id": "Railway Stations",
-        "type": "circle",
-        "source": {
-          type: 'vector',
-          url: 'mapbox://kjtitlowsorlie.ck2hr20v70bl22ons6yqz7v2i-2m3e1',
-        },
-        "source-layer": "transport_rail_stations",
-        "layout": {
-          "visibility": "none"
-        },
-        "paint": {
-          "circle-radius": 3,
-          "circle-color": "#E65100"
-        }
-  });
-
-
-  //Adds the CBD's of the administrative districts to the map
-  map.addLayer({
-        "id": "Proximate CBDs",
-        "type": "circle",
-        "source": {
-          type: 'vector',
-          url: 'mapbox://kjtitlowsorlie.dzh4aewp',
-        },
-        "source-layer": "destinations_cbd_n3_proximate-47a3a8",
-        "layout": {
-           "visibility": "none"
-        },
-        "paint": {
-          "circle-radius": 4,
-          "circle-color": "#E65100",
-          'circle-stroke-color': '#E65100',
-          'circle-stroke-width': 1,
-        }
-  });
-
-  //Adds the CBD's of Quilmes
-  map.addLayer({
-        "id": "Pilar CBD",
-        "type": "circle",
-        "source": {
-          type: 'vector',
-          url: 'mapbox://kjtitlowsorlie.agl0ofae',
-        },
-        "source-layer": "destinations_cbd_n3_pilar-d5nb3e",
-        "layout": {
-           "visibility": "none"
-        },
-        "paint": {
-          "circle-radius": 5,
-          "circle-color": "#E65100",
-          'circle-stroke-color': '#E65100',
-          'circle-stroke-width': 1,
-        }
-  });
-
-  //Adds the CBD's of La Matanza
-  map.addLayer({
-        "id": "La Matanza CBD",
-        "type": "circle",
-        "source": {
-          type: 'vector',
-          url: 'mapbox://kjtitlowsorlie.d1w0pjta',
-        },
-        "source-layer": "destinations_cbd_n3_lamatanza-6petqm",
-        "layout": {
-           "visibility": "none"
-        },
-        "paint": {
-          "circle-radius": 5,
-          "circle-color": "#E65100",
-          'circle-stroke-color': '#E65100',
-          'circle-stroke-width': 1,
-        }
-  });
-
-  //Adds the CBD's of Quilmes
-  map.addLayer({
-        "id": "Quilmes CBD",
-        "type": "circle",
-        "source": {
-          type: 'vector',
-          url: 'mapbox://kjtitlowsorlie.29oi0mt7',
-        },
-        "source-layer": "destinations_cbd_n3_quilmes-09rt2h",
-        "layout": {
-           "visibility": "none"
-        },
-        "paint": {
-          "circle-radius": 5,
-          "circle-color": "#E65100",
-          'circle-stroke-color': '#E65100',
-          'circle-stroke-width': 1,
-        }
-  });
-
-
-  //Adds the CBD's of Buenos Aires AMBA
-  map.addLayer({
-        "id": "Buenos Aires CBD",
-        "type": "circle",
-        "source": {
-          type: 'vector',
-          url: 'mapbox://kjtitlowsorlie.0sun1ebq',
-        },
-        "source-layer": "destinations_cbd_amba-43nl1e",
-        "layout": {
-           "visibility": "none"
-        },
-        "paint": {
-          "circle-radius": 6,
-          "circle-color": "#E65100",
-          'circle-stroke-color': '#E65100',
-          'circle-stroke-width': 1,
-        }
-  });
 
 });
 
