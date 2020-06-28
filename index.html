@@ -7,6 +7,7 @@
   <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
   <style>
     body { margin:0; padding:5; }
+    /*#map { position: absolute; top: 0; bottom: 0; width: 100%; */
   </style>
 </head>
 
@@ -16,6 +17,7 @@
 /* This controls styling for the map elements ------------------------------------------------------------- */
 .map {
   background-color: #8BBAD8;
+  opacity: 1.0;
   color: black;
   border: 2px solid black;
   padding:0px
@@ -23,16 +25,16 @@
 
 .map h1 {
   margin: 20 10 15px;
-  font-size: 30px;
+  font-size: 28px;
 }
 
 .map h4 {
-  margin: 10 10 10px;
+  margin: 5 10 5px;
   font-size: 16px;
 }
 
 .map p {
-  margin: 10 10 8px;
+  margin: 5 10 5px;
   font-size: 11.5px;
 }
 
@@ -100,7 +102,7 @@
       font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
       font-size: 14px;
       border-radius: 2px;
-      padding-bottom: 50px;
+      padding-bottom: 0px;
   }
 
 .mapboxgl-popup-content {
@@ -127,10 +129,6 @@
         font-weight:400;
       }
 
-  .mapboxgl-popup-content div {
-        padding:10px;
-      }
-
 /* This controls the size and location of the legend -------------------------------------------------------- */
 .legend {
   background-color: #232323;
@@ -154,13 +152,13 @@
     }
 
 .legend h3 {
-  margin: 5 0 5px;
+  margin: 2 0 5px;
   color: white;
   font-size: 15px;
   }
 
 .legend h4 {
-  margin: 5 0 5px;
+  margin: 2 0 5px;
   color: white;
   font-size: 12px;
   }
@@ -192,30 +190,30 @@
 </style>
 
 <div id="feature-menu" class="menu">
-  <h3>Travel Times</h3>
-  <p>Click on a destination to show the minimum public transit-based travel time to that amenity.</p>
-  <p>Census <i>radios</i> were randomly selected based on percent overlap with a known <i>asentamiento</i> in one of the three studied departments: Pilar, La Matanza, and Quilmes.</p>
-  <p> No overlap implies a formal neighborhood.</p>
+  <h3>Destination Menu</h3>
+  <p>Click on a destination to show its location(s) and the minimum travel time, <u>using only public transit</u>, to any of those sites from a sampled <i>radio</i>.</p>
+  <p><i>Radios</i> selected based on overlap with a known <i>asentamiento</i> from one of the three sample departments: Pilar, La Matanza, and Quilmes.</p>
 </div>
 
 <div id="asent-legend" class="legend">
   <h2>Origins</h2>
-  <div><span-rec style="background-color: #199a75"></span-rec>Asentamientos</div>
-  <div><span-rec style="background-color: gray"></span-rec>Studied department or <i>radio</i></div>
+  <div><span-rec style="background-color: #199a75"></span-rec><i>Asentamientos</i></div>
+  <div><span-rec style="background-color: gray"></span-rec>Study area (department or <i>radio</i>)</div>
   <h3>Travel Times, per <i>radio</i></h3>
-  <h4>Circles sized by relative travel time.</h4>
-  <div><span style="background-color: #decbf0"></span><i>Radio</i> without asent.</div>
-  <div><span style="background-color: #9d64d3"></span><i>Radio</i> partially with asent.</div>
-  <div><span style="background-color: #5b278b"></span><i>Radio</i> primarily with asent.</div>
+  <h4>Circle size indicates <u>relative</u> travel time.</h4>
+  <h4>Hover over circle for <u>absolute</u> travel time.</h4>
+  <div><span style="background-color: #decbf0"></span><i>Radio</i> without <i>asent.</i></div>
+  <div><span style="background-color: #9d64d3"></span><i>Radio</i> with <i>asent.</i> (<50% overlap)</div>
+  <div><span style="background-color: #5b278b"></span><i>Radio</i> with <i>asent.</i> (>50% overlap)</div>
   </ul>
   <h2>Destinations</h2>
   <div><span style="background-color: #E65100"></span>Amenity location(s)</div>
 </div>
 
 <div id='map' class="map" style='height:100%; width:100%'>
-<h1>De alguna manera llegas</h1>
-<h4>Using public transportation, does it take longer to reach daily amenities from Buenos Aires' conurban <i>asentamientos</i> than from <br> its formal neighborhoods? According to Google Transit data from 2018, the results are mixed, varying by department.</h4>
-<p><b>Sources:</b> <i>Asentamientos</i>, TECHO; Census geographies, INDEC; Schools, health sites, and railroad stations, Province of Buenos Aires; Travel times, Google Transit API
+<h1>Buenos Aires' <i>asentamientos</i>, public transportation, and access</h1>
+<h4>Darker circles indicate sampled census <i>radios</i> with an <i>asentamiento</i>. Larger circles indicate longer relative travel times. </h4>
+<p><b>Sources:</b> <i>Asentamientos</i>: <a href="https://www.techo.org/argentina/">TECHO</a>; Geographic units: <a href="https://www.indec.gob.ar/indec/web/Nivel3-Tema-1-39">INDEC</a>; Schools, health sites, and railroad stations: <a href="https://www.gba.gob.ar/datosabiertos/">Prov. de Buenos Aires</a>; Travel times, <a href="https://developers.google.com/maps/documentation/distance-matrix/intro">Google Distance Matrix API</a>
 </div>
 
 <script>
