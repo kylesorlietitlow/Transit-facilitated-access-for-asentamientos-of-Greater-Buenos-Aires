@@ -16,118 +16,125 @@
 
 /* This controls styling for the map elements ------------------------------------------------------------- */
 .map {
-  background-color: #8BBAD8;
   opacity: 1.0;
-  color: black;
-  border: 2px solid black;
-  padding:0px
+  border: 0px solid black;
+  padding: 0px;
 }
 
-.map h1 {
-  margin: 20 10 15px;
+/* This controls styling for the title elements ------------------------------------------------------------- */
+.title {
+  font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  background-color: #8BBAD8;
+  border: 1px solid black;
+  opacity: 1.0;
+  color: black;
+}
+
+.title h1 {
+  margin: 15 10 15px;
   font-size: 28px;
 }
 
-.map h4 {
+.title h4 {
   margin: 5 10 5px;
   font-size: 16px;
 }
 
-.map p {
+.title p {
   margin: 5 10 5px;
   font-size: 11.5px;
 }
 
 /* This controls the menu for selecting layers on and off ------------------------------------------------- */
 .menu {
-    background: #232323;
-    position: absolute;
-    z-index: 1;
-    top: 25px;
-    right: 40px;
-    border-radius: 2px;
-    width: 250px;
-    border: 3px solid black;
-    font-family: 'Open Sans', sans-serif;
+  background: #232323;
+  position: absolute;
+  z-index: 1;
+  top: 25px;
+  right: 40px;
+  border-radius: 2px;
+  width: 250px;
+  border: 3px solid black;
+  font-family: 'Open Sans', sans-serif;
   }
 
 .menu h3 {
-      color: #8BBAD8;
-      margin: 10 5 5px;
-    }
+  color: #8BBAD8;
+  margin: 10 5 5px;
+  }
 
 .menu p {
-      color: #E8E8E8;
-      font-size: 14px;
-      margin: 10 5 10px;
-    }
+  color: #E8E8E8;
+  font-size: 14px;
+  margin: 10 5 10px;
+  }
 
 .menu a {
-    font-size: 14px;
-    /* font color of layer menu */
-    color: #000000;
-    background-color: #F5F9FD;
-    //border: 1px solid navy;
-    display: block;
-    margin: 0;
-    /*padding: 0;*/
-    padding: 5px;
-    text-decoration: none;
-    border-top: 1px solid black;
-    /*border-bottom: 1px solid black;*/
-    text-align: center;
+  font-size: 14px;
+  /* font color of layer menu */
+  color: #000000;
+  background-color: #F5F9FD;
+  border: 1px solid navy;
+  display: block;
+  margin: 0;
+  /*padding: 0;*/
+  padding: 5px;
+  text-decoration: none;
+  border-top: 1px solid black;
+  /*border-bottom: 1px solid black;*/
+  text-align: center;
   }
 
 .menu a:last-child {
-    border-top: 1px solid black;
+  border-top: 1px solid black;
   }
 
 .menu a:hover {
-    background-color: #BAD8F2;
-    color: #404040;
+  background-color: #BAD8F2;
+  color: #404040;
   }
 
 .menu a.active {
-    background-color: #5B94C0;
-    color: #ffffff;
+  background-color: #5B94C0;
+  color: #ffffff;
   }
 
 .menu a.active:hover {
-    background: #1C5989;
+  background: #1C5989;
   }
 
 /* This adjusts the pop-ups --------------------------------------------------------------------------- */
 .mapboxgl-popup {
-      max-width: 200px;
-      font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-      font-size: 14px;
-      border-radius: 2px;
-      padding-bottom: 0px;
+  max-width: 200px;
+  font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 5px;
   }
 
 .mapboxgl-popup-content {
-        font:400 15px/22px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-        padding:0;
-        width:180px;
-      }
+  font:400 15px/22px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  padding: 5px;
+  /* width:180px; */
+  }
 
-  .mapboxgl-popup-content h3 {
-        background:#91c949;
-        color:#fff;
-        margin:0;
-        display:block;
-        padding:10px;
-        border-radius:3px 3px 0 0;
-        font-weight:700;
-        margin-top:-15px;
-      }
+.mapboxgl-popup-content h3 {
+  background:#91c949;
+  color:#fff;
+  margin:0;
+  display:block;
+  padding:10px;
+  border-radius:3px 3px 0 0;
+  font-weight:700;
+  margin-top:-15px;
+  }
 
-  .mapboxgl-popup-content h4 {
-        margin:0;
-        display:block;
-        padding: 10px 10px 10px 10px;
-        font-weight:400;
-      }
+.mapboxgl-popup-content h4 {
+  margin:0;
+  display:block;
+  padding: 10px 10px 10px 10px;
+  font-weight:400;
+  }
 
 /* This controls the size and location of the legend -------------------------------------------------------- */
 .legend {
@@ -146,10 +153,10 @@
   }
 
 .legend h2 {
-    margin: 5 0 5px;
-    color: white;
-    font-size: 18px;
-    }
+  margin: 5 0 5px;
+  color: white;
+  font-size: 18px;
+  }
 
 .legend h3 {
   margin: 2 0 5px;
@@ -158,7 +165,7 @@
   }
 
 .legend h4 {
-  margin: 2 0 5px;
+  margin: 0 0 0px;
   color: white;
   font-size: 12px;
   }
@@ -170,13 +177,13 @@
   }
 
 .legend div span-rec {
-    border-radius: 0%;
-    display: inline-block;
-    height: 10px;
-    width: 15px;
-    margin-right: 10px;
-    /*font-size: 12px;*/
-    }
+  border-radius: 0%;
+  display: inline-block;
+  height: 10px;
+  width: 15px;
+  margin-right: 10px;
+  /*font-size: 12px;*/
+  }
 
 .legend div span {
   border-radius: 50%;
@@ -189,17 +196,23 @@
 
 </style>
 
+<div id="title" class="title">
+<h1>Buenos Aires' <i>asentamientos</i>, public transportation, and access</h1>
+<h4>Darker circles indicate sampled census <i>radios</i> with an <i>asentamiento</i>. Larger circles indicate longer relative travel times. </h4>
+<p><b>Sources:</b> <i>Asentamientos</i>: <a href="https://www.techo.org/argentina/">TECHO</a>; Geographic units: <a href="https://www.indec.gob.ar/indec/web/Nivel3-Tema-1-39">INDEC</a>; Schools, health sites, and railroad stations: <a href="https://www.gba.gob.ar/datosabiertos/">Prov. de Buenos Aires</a>; Travel times, <a href="https://developers.google.com/maps/documentation/distance-matrix/intro">Google Distance Matrix API</a>
+</div>
+
 <div id="feature-menu" class="menu">
-  <h3>Destination Menu</h3>
-  <p>Click on a destination to show its location(s) and the minimum travel time, <u>using only public transit</u>, to any of those sites from a sampled <i>radio</i>.</p>
-  <p><i>Radios</i> selected based on overlap with a known <i>asentamiento</i> from one of the three sample departments: Pilar, La Matanza, and Quilmes.</p>
+<h3>Amenity Travel Times</h3>
+<p>Click on a destination to show its location(s) and the minimum travel time, <u>using only public transit</u>, to any of those sites from a sampled <i>radio</i>.</p>
+<p><i>Radios</i> selected based on overlap with a known <i>asentamiento</i> from one of the three sample departments: Pilar, La Matanza, and Quilmes.</p>
 </div>
 
 <div id="asent-legend" class="legend">
   <h2>Origins</h2>
   <div><span-rec style="background-color: #199a75"></span-rec><i>Asentamientos</i></div>
   <div><span-rec style="background-color: gray"></span-rec>Study area (department or <i>radio</i>)</div>
-  <h3>Travel Times, per <i>radio</i></h3>
+  <h3>Travel Times, from <i>radio</i></h3>
   <h4>Circle size indicates <u>relative</u> travel time.</h4>
   <h4>Hover over circle for <u>absolute</u> travel time.</h4>
   <div><span style="background-color: #decbf0"></span><i>Radio</i> without <i>asent.</i></div>
@@ -207,13 +220,10 @@
   <div><span style="background-color: #5b278b"></span><i>Radio</i> with <i>asent.</i> (>50% overlap)</div>
   </ul>
   <h2>Destinations</h2>
-  <div><span style="background-color: #E65100"></span>Amenity location(s)</div>
+  <div><span style="background-color: #E65100"></span>Location(s) of selected amenity</div>
 </div>
 
 <div id='map' class="map" style='height:100%; width:100%'>
-<h1>Buenos Aires' <i>asentamientos</i>, public transportation, and access</h1>
-<h4>Darker circles indicate sampled census <i>radios</i> with an <i>asentamiento</i>. Larger circles indicate longer relative travel times. </h4>
-<p><b>Sources:</b> <i>Asentamientos</i>: <a href="https://www.techo.org/argentina/">TECHO</a>; Geographic units: <a href="https://www.indec.gob.ar/indec/web/Nivel3-Tema-1-39">INDEC</a>; Schools, health sites, and railroad stations: <a href="https://www.gba.gob.ar/datosabiertos/">Prov. de Buenos Aires</a>; Travel times, <a href="https://developers.google.com/maps/documentation/distance-matrix/intro">Google Distance Matrix API</a>
 </div>
 
 <script>
@@ -625,34 +635,34 @@ map.on('load', function () {
               "visibility": "none"
            },
            "paint": {
-             "circle-radius": 6,
+             "circle-radius": 5.5,
              "circle-color": "#E65100",
              'circle-stroke-color': '#E65100',
              'circle-stroke-width': 1,
            }
      });
 
-  // ORIGINS ---------------------------------------------------------
-  // Adds the Buenos Aires CBD travel times to the map
+  // ORIGINS ---------------------------------------------------------------------------------------------------------------
+  // Adds the Buenos Aires CBD travel times to the map *************************************************
   map.addLayer({
-             "id": "TT: BsAs CBD",
-             "type": "circle",
-             "source": {
+      "id": "TT: BsAs CBD",
+      "type": "circle",
+      "source": {
                type: 'vector',
                url: 'mapbox://kjtitlowsorlie.670ruj5d',
-             },
-             "source-layer": "origin_radio_n3_tt_all-9auufk",
-             "layout": {
-                 "visibility": "none"
-             },
-             "paint": {
+      },
+      "source-layer": "origin_radio_n3_tt_all-9auufk",
+      "layout": {
+      "visibility": "none"
+      },
+      "paint": {
                "circle-radius": [
                        'interpolate', ['linear'], ['zoom'],
                        9, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 30],
                        11, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 20],
                        13, ['/', ['number', ['get', 'trvtime_cbd_bsas']], 10],
                 ],
-               "circle-color": [
+      "circle-color": [
                     'match',
                     ['get', 'COVERAGE_TYPE'],
                     'NONE', '#decbf0',
@@ -673,34 +683,33 @@ map.on('load', function () {
              }
   });
 
-  // Create a popup, but don't add it to the map yet.
-  var popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false
-        });
+  var popup0 = new mapboxgl.Popup({
+        closeButton: true,
+        closeOnClick: true
+  });
 
   map.on('mouseenter', 'TT: BsAs CBD', function(e) {
-            // Change the cursor style as a UI indicator.
-            map.getCanvas().style.cursor = 'pointer';
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
 
-            var coordinates = e.features[0].geometry.coordinates.slice();
-            var ttime_cbd_bsas = e.features[0].properties.trvtime_cbd_bsas;
-            var ttime_cbd_bsas = Math.round(ttime_cbd_bsas)
+        var coordinates0 = e.features[0].geometry.coordinates.slice();
+        var ttime_cbd_bsas = e.features[0].properties.trvtime_cbd_bsas;
+        var ttime_cbd_bsas = (ttime_cbd_bsas).toFixed(0);
 
-            // Populate the popup and set its coordinates
-            // based on the feature found.
-            popup
-            .setLngLat(coordinates)
-            .setHTML(ttime_cbd_bsas + ' minutes')
-            .addTo(map);
-        });
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup0
+          .setLngLat(coordinates0)
+          .setHTML('<b>Minimum time: </b>' + ttime_cbd_bsas + " min.")
+          .addTo(map);
+  });
 
   map.on('mouseleave', 'TT: BsAs CBD', function() {
         map.getCanvas().style.cursor = '';
-        popup.remove();
-        });
+        popup0.remove();
+  });
 
-   // Adds the Departmental CBD travel times to the map
+   // Adds the Departmental CBD travel times to the map --------------------------------------------------------------
   map.addLayer({
           "id": "TT: Dept CBD",
           "type": "circle",
@@ -740,7 +749,35 @@ map.on('load', function () {
           }
     });
 
-    // Adds the Departmental CBD travel times to the map
+    // Pop up with travel time
+    var popup1 = new mapboxgl.Popup({
+          closeButton: true,
+          closeOnClick: true
+          });
+
+    map.on('mouseenter', 'TT: Dept CBD', function(e) {
+
+          // Change the cursor style as a UI indicator.
+          map.getCanvas().style.cursor = 'pointer';
+
+          var coordinates1 = e.features[0].geometry.coordinates.slice();
+          var ttime_cbd_loc = e.features[0].properties.trvtime_cbd_loc;
+          var ttime_cbd_loc = Math.round(ttime_cbd_loc)
+
+          // Populate the popup and set its coordinates
+          // based on the feature found.
+          popup1
+          .setLngLat(coordinates1)
+          .setHTML('<b>Minimum time: </b>' + ttime_cbd_loc + " min.")
+          .addTo(map);
+          });
+
+    map.on('mouseleave', 'TT: Dept CBD', function() {
+          map.getCanvas().style.cursor = '';
+          popup1.remove();
+          });
+
+   // Adds the Departmental CBD travel times to the map -----------------------------------------------------------
    map.addLayer({
            "id": "TT: Any Dept CBD",
            "type": "circle",
@@ -780,8 +817,36 @@ map.on('load', function () {
            }
      });
 
+     // Pop up with travel time
+     var popup2 = new mapboxgl.Popup({
+           closeButton: true,
+           closeOnClick: true
+           });
 
-     // Adds the railway station travel times to the map
+     map.on('mouseenter', 'TT: Any Dept CBD', function(e) {
+
+           // Change the cursor style as a UI indicator.
+           map.getCanvas().style.cursor = 'pointer';
+
+           var coordinates2 = e.features[0].geometry.coordinates.slice();
+           var ttime_cbd_ngh = e.features[0].properties.trvtime_cbd_ngh_min;
+           var ttime_cbd_ngh = Math.round(ttime_cbd_ngh)
+
+           // Populate the popup and set its coordinates
+           // based on the feature found.
+           popup2
+           .setLngLat(coordinates2)
+           .setHTML('<b>Minimum time: </b>' + ttime_cbd_ngh + " min.")
+           .addTo(map);
+           });
+
+     map.on('mouseleave', 'TT: Any Dept CBD', function() {
+           map.getCanvas().style.cursor = '';
+           popup2.remove();
+           });
+
+
+     // Adds the railway station travel times to the map -----------------------------------------------------
     map.addLayer({
             "id": "TT: Railroads",
             "type": "circle",
@@ -821,7 +886,36 @@ map.on('load', function () {
             }
       });
 
-      // Adds the diagnostic/treatment travel times to the map
+      // Pop up with travel time
+      var popup3 = new mapboxgl.Popup({
+            closeButton: true,
+            closeOnClick: true
+            });
+
+      map.on('mouseenter', 'TT: Railroads', function(e) {
+
+            // Change the cursor style as a UI indicator.
+            map.getCanvas().style.cursor = 'pointer';
+
+            var coordinates3 = e.features[0].geometry.coordinates.slice();
+            var ttime_rr = e.features[0].properties.trvtime_rail_min;
+            var ttime_rr = Math.round(ttime_rr)
+
+            // Populate the popup and set its coordinates
+            // based on the feature found.
+            popup3
+            .setLngLat(coordinates3)
+            .setHTML('<b>Minimum time: </b>' + ttime_rr + " min.")
+            .addTo(map);
+            });
+
+      map.on('mouseleave', 'TT: Railroads', function() {
+            map.getCanvas().style.cursor = '';
+            popup3.remove();
+            });
+
+
+     // Adds the diagnostic/treatment travel times to the map -----------------------------------------------------
      map.addLayer({
              "id": "TT: DiagTreat",
              "type": "circle",
@@ -839,6 +933,7 @@ map.on('load', function () {
                        9, ['/', ['number', ['get', 'trvtime_dgntrt_min']], 5],
                        11, ['/', ['number', ['get', 'trvtime_dgntrt_min']], 3.5],
                        13, ['/', ['number', ['get', 'trvtime_dgntrt_min']], 2],
+                       /* other */
                 ],
                 "circle-color": [
                          'match',
@@ -861,7 +956,35 @@ map.on('load', function () {
              }
        });
 
-       // Adds the hospital travel times to the map
+       // Pop up with travel time
+       var popup4 = new mapboxgl.Popup({
+             closeButton: true,
+             closeOnClick: true
+             });
+
+       map.on('mouseenter', 'TT: DiagTreat', function(e) {
+
+             // Change the cursor style as a UI indicator.
+             map.getCanvas().style.cursor = 'pointer';
+
+             var coordinates4 = e.features[0].geometry.coordinates.slice();
+             var ttime_dgntrt = e.features[0].properties.trvtime_dgntrt_min;
+             var ttime_dgntrt = Math.round(ttime_dgntrt)
+
+             // Populate the popup and set its coordinates
+             // based on the feature found.
+             popup4
+             .setLngLat(coordinates4)
+             .setHTML('<b>Minimum time: </b>' + ttime_dgntrt + " min.")
+             .addTo(map);
+             });
+
+       map.on('mouseleave', 'TT: DiagTreat', function() {
+             map.getCanvas().style.cursor = '';
+             popup4.remove();
+             });
+
+       // Adds the hospital travel times to the map ---------------------------------------------------
       map.addLayer({
               "id": "TT: Hospitals",
               "type": "circle",
@@ -901,7 +1024,35 @@ map.on('load', function () {
               }
         });
 
-        // Adds the UPA travel times to the map
+        // Pop up with travel time *******
+        var popup5 = new mapboxgl.Popup({
+              closeButton: true,
+              closeOnClick: true
+              });
+
+        map.on('mouseenter', 'TT: Hospitals', function(e) {
+
+              // Change the cursor style as a UI indicator.
+              map.getCanvas().style.cursor = 'pointer';
+
+              var coordinates5 = e.features[0].geometry.coordinates.slice();
+              var ttime_hspt = e.features[0].properties.trvtime_hspt_min;
+              var ttime_hspt = Math.round(ttime_hspt)
+
+              // Populate the popup and set its coordinates
+              // based on the feature found.
+              popup5
+              .setLngLat(coordinates5)
+              .setHTML('<b>Minimum time: </b>' + ttime_hspt + " min.")
+              .addTo(map);
+              });
+
+        map.on('mouseleave', 'TT: Hospitals', function() {
+              map.getCanvas().style.cursor = '';
+              popup5.remove();
+              });
+
+        // Adds the UPA travel times to the map -------------------------------------------------------------------
        map.addLayer({
                "id": "TT: UPAs",
                "type": "circle",
@@ -941,7 +1092,34 @@ map.on('load', function () {
                }
          });
 
-         // Adds the kindergarten travel times to the map
+         var popup6 = new mapboxgl.Popup({
+               closeButton: true,
+               closeOnClick: true
+               });
+
+         map.on('mouseenter', 'TT: UPAs', function(e) {
+
+               // Change the cursor style as a UI indicator.
+               map.getCanvas().style.cursor = 'pointer';
+
+               var coordinates6 = e.features[0].geometry.coordinates.slice();
+               var ttime_upa_min = e.features[0].properties.trvtime_upa_min;
+               var ttime_upa_min = (ttime_upa_min).toFixed(0);
+
+               // Populate the popup and set its coordinates
+               // based on the feature found.
+               popup6
+               .setLngLat(coordinates6)
+               .setHTML('<b>Minimum time: </b>' + ttime_upa_min + " min.")
+               .addTo(map);
+               });
+
+         map.on('mouseleave', 'TT: UPAs', function() {
+               map.getCanvas().style.cursor = '';
+               popup6.remove();
+               });
+
+        // Adds the kindergarten travel times to the map ---------------------------------------------------------------------
         map.addLayer({
                 "id": "TT: Kindergarten",
                 "type": "circle",
@@ -981,7 +1159,35 @@ map.on('load', function () {
                 }
           });
 
-          // Adds the primary school travel times to the map
+          // Add pop-up
+          var popup7 = new mapboxgl.Popup({
+              closeButton: true,
+              closeOnClick: true
+              });
+
+          map.on('mouseenter', 'TT: Kindergarten', function(e) {
+
+              // Change the cursor style as a UI indicator.
+              map.getCanvas().style.cursor = 'pointer';
+
+              var coordinates7 = e.features[0].geometry.coordinates.slice();
+              var ttime_knd_min = e.features[0].properties.trvtime_edknd_min;
+              var ttime_knd_min = (ttime_knd_min).toFixed(0);
+
+              // Populate the popup and set its coordinates
+              // based on the feature found.
+              popup7
+                  .setLngLat(coordinates7)
+                  .setHTML('<b>Minimum time: </b>' + ttime_knd_min + " min.")
+                  .addTo(map);
+                  });
+
+             map.on('mouseleave', 'TT: Kindergarten', function() {
+                  map.getCanvas().style.cursor = '';
+                  popup7.remove();
+                  });
+
+          // Adds the primary school travel times to the map ------------------------------------------------------------
          map.addLayer({
                  "id": "TT: Primary Ed",
                  "type": "circle",
@@ -1021,7 +1227,34 @@ map.on('load', function () {
                  }
            });
 
-           // Adds the secondary school travel times to the map
+           var popup8 = new mapboxgl.Popup({
+               closeButton: true,
+               closeOnClick: true
+               });
+
+           map.on('mouseenter', 'TT: Primary Ed', function(e) {
+
+               // Change the cursor style as a UI indicator.
+               map.getCanvas().style.cursor = 'pointer';
+
+               var coordinates8 = e.features[0].geometry.coordinates.slice();
+               var ttime_edprm_min = e.features[0].properties.trvtime_edprm_min;
+               var ttime_edprm_min = (ttime_edprm_min).toFixed(0);
+
+               // Populate the popup and set its coordinates
+               // based on the feature found.
+               popup8
+                   .setLngLat(coordinates8)
+                   .setHTML('<b>Minimum time: </b>' + ttime_edprm_min + " min.")
+                   .addTo(map);
+                   });
+
+              map.on('mouseleave', 'TT: Primary Ed', function() {
+                   map.getCanvas().style.cursor = '';
+                   popup8.remove();
+                   });
+
+           // Adds the secondary school travel times to the map ----------------------------------------------------
           map.addLayer({
                   "id": "TT: Secondary Ed",
                   "type": "circle",
@@ -1060,6 +1293,33 @@ map.on('load', function () {
                      'circle-opacity': 0.75
                   }
             });
+
+            var popup9 = new mapboxgl.Popup({
+                closeButton: true,
+                closeOnClick: true
+                });
+
+            map.on('mouseenter', 'TT: Secondary Ed', function(e) {
+
+                // Change the cursor style as a UI indicator.
+                map.getCanvas().style.cursor = 'pointer';
+
+                var coordinates9 = e.features[0].geometry.coordinates.slice();
+                var ttime_edsec_min = e.features[0].properties.trvtime_edsec_min;
+                var ttime_edsec_min = (ttime_edsec_min).toFixed(0);
+
+                // Populate the popup and set its coordinates
+                // based on the feature found.
+                popup9
+                    .setLngLat(coordinates9)
+                    .setHTML('<b>Minimum time: </b>' + ttime_edsec_min + " min.")
+                    .addTo(map);
+                });
+
+               map.on('mouseleave', 'TT: Secondary Ed', function() {
+                    map.getCanvas().style.cursor = '';
+                    popup9.remove();
+                });
 
 });
 
